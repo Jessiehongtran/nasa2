@@ -5,8 +5,11 @@ class PhotoGrid extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            date: '2012-02-14',
-            photo: ''
+            date: '2012-02-15',
+            photo: '',
+            title: '',
+            explanation: '',
+            
         }
     }
 
@@ -71,7 +74,13 @@ class PhotoGrid extends React.Component {
         .get(`https://api.nasa.gov/planetary/apod?api_key=HpJEx1kZ3eD7MbBaHy0qDJKbMdjIEiAaprSj7Y8u&date=${this.state.date}`)
         .then(res => {
             console.log(res)
-            this.setState({photo: res.data.url})
+            this.setState({
+                date: res.data.date,
+                photo: res.data.url,
+                title: res.data.title,
+                explanation: res.data.explanation
+
+            })
             })
         .catch(err=>{
             console.log('err', err)})
@@ -84,12 +93,15 @@ class PhotoGrid extends React.Component {
         .get(`https://api.nasa.gov/planetary/apod?api_key=HpJEx1kZ3eD7MbBaHy0qDJKbMdjIEiAaprSj7Y8u&date=${this.state.date}`)
         .then(res => {
             console.log(res)
-            this.setState({photo: res.data.url})
+            this.setState({
+                date: res.data.date,
+                photo: res.data.url,
+                title: res.data.title,
+                explanation: res.data.explanation
+            })
             })
         .catch(err=>{
             console.log('err', err)})
-        
-        
        }
 
 
@@ -109,6 +121,9 @@ class PhotoGrid extends React.Component {
                  this.fetchImages()
                 }
                 }>Time forward</button>
+                <p>{this.state.date}</p>
+                <p>{this.state.title}</p>
+                <p>{this.state.explanation}</p>
                 <img src={this.state.photo}/>
             </div>
         )
