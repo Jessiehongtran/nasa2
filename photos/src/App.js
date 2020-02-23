@@ -13,7 +13,7 @@ function App() {
         That's why we've saved these moments
       </Tagline>
       <Instruction>
-        Click the following buttons to see Photo of the Days
+        Search the date or click the following buttons to see Photo of the Days
       </Instruction>
       <PhotoGrid/>
     </div>

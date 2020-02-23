@@ -8,6 +8,13 @@ background-color: #F3E3DE;
 font-size: 14px;
 padding: 5px
 `
+export const Input = styled.input`
+margin: 5px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+border-radius: 6px;
+font-size: 14px;
+padding: 5px
+`
 
 export const Header = styled.h1`
 color: #8B0000;

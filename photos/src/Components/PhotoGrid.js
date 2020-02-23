@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Button} from './Style';
+import {Button, Input} from './Style';
 
 class PhotoGrid extends React.Component {
     constructor(props){
@@ -10,8 +10,32 @@ class PhotoGrid extends React.Component {
             photo: '',
             title: '',
             explanation: '',
-            
+
         }
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    fetchImages(date){
+        axios 
+        .get(`https://api.nasa.gov/planetary/apod?api_key=HpJEx1kZ3eD7MbBaHy0qDJKbMdjIEiAaprSj7Y8u&date=${date}`)
+        .then(res => {
+            console.log(res)
+            this.setState({
+                date: res.data.date,
+                photo: res.data.url,
+                title: res.data.title,
+                explanation: res.data.explanation
+            })
+            })
+        .catch(err=>{
+            console.log('err', err)})
+    }
+
+    handleChange(e){
+        this.setState({date: e.target.value})
+        const searchDate = e.target.value
+        this.fetchImages(searchDate)
     }
 
     decreaseDate(){
@@ -38,19 +62,7 @@ class PhotoGrid extends React.Component {
 
         const yesterday = String(year) + "-" + String(month).padStart(2, '0') + "-" + String(date).padStart(2, '0')
         this.setState({date: yesterday})
-        axios 
-        .get(`https://api.nasa.gov/planetary/apod?api_key=HpJEx1kZ3eD7MbBaHy0qDJKbMdjIEiAaprSj7Y8u&date=${yesterday}`)
-        .then(res => {
-            console.log(res)
-            this.setState({
-                date: res.data.date,
-                photo: res.data.url,
-                title: res.data.title,
-                explanation: res.data.explanation
-            })
-            })
-        .catch(err=>{
-            console.log('err', err)})
+        this.fetchImages(yesterday)
 
     }
 
@@ -78,19 +90,7 @@ class PhotoGrid extends React.Component {
 
         const tomorrow = String(year) + "-" + String(month).padStart(2, '0') + "-" + String(date).padStart(2, '0')
         this.setState({date: tomorrow})
-        axios 
-        .get(`https://api.nasa.gov/planetary/apod?api_key=HpJEx1kZ3eD7MbBaHy0qDJKbMdjIEiAaprSj7Y8u&date=${tomorrow}`)
-        .then(res => {
-            console.log(res)
-            this.setState({
-                date: res.data.date,
-                photo: res.data.url,
-                title: res.data.title,
-                explanation: res.data.explanation
-            })
-            })
-        .catch(err=>{
-            console.log('err', err)})
+        this.fetchImages(tomorrow)
 
     }
 
@@ -123,12 +123,17 @@ class PhotoGrid extends React.Component {
                 {
                  this.decreaseDate()
                 }
-                }>Time back</Button>
+                }>Time backward</Button>
+                <Input 
+                type='date'
+                onChange={this.handleChange}
+                />
                 <Button onClick={() => 
                 {
                  this.increaseDate()
                 }
                 }>Time forward</Button>
+                
                 <p>{this.state.date}</p>
                 <h3>{this.state.title}</h3>
                 <p>{this.state.explanation}</p>
