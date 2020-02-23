@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const Button = styled.button`
+margin: 5px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+border-radius: 6px;
+background-color: #F3E3DE;
+font-size: 14px;
+padding: 5px
+`
+
 export const Header = styled.h1`
 color: #8B0000;
 font-size: 50px;
